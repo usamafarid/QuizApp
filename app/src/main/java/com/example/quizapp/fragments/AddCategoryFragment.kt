@@ -1,6 +1,6 @@
 package com.example.quizapp.fragments
 
-import android.net.Uri
+
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -43,7 +43,7 @@ class AddCategoryFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        (activity as MainActivity).toolbar.title="Add Category";
+        (activity as MainActivity).toolbar.title="Add Category"
 
     }
 
