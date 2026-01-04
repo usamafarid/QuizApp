@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_constraintVertical_chainStyle="packed"
+    tools:context=".fragments.ResultFragment">
+
+
+
+<!--        <androidx.appcompat.widget.Toolbar-->
+<!--            android:id="@+id/resulttoolbar"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="#081B97"-->
+<!--            android:title="Result"-->
+
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+
+    <TextView
+        android:layout_marginTop="64dp"
+        android:id="@+id/tvCompleted"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:drawableStart="@drawable/party"
+        android:drawablePadding="8dp"
+        android:text="Quiz Completed!"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/scoreContainer"
+        app:cardCornerRadius="64dp"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/score_circle"
+        app:layout_constraintBottom_toTopOf="@+id/tvMessage"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvCompleted">
+
+        <TextView
+            android:layout_gravity="center"
+            android:id="@+id/yourScore"
+            android:textColor="@color/black"
+            android:textAlignment="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your Score">
+
+        </TextView>
+
+        <TextView
+            android:layout_gravity="center"
+            android:layout_marginTop="24dp"
+            android:id="@+id/tvScore"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0/10">
+
+        </TextView>
+
+    </androidx.cardview.widget.CardView>
+
+
+    <!-- Congratulation Message -->
+    <!-- Buttons -->
+
+
+    <TextView
+        android:id="@+id/tvMessage"
+        android:layout_marginTop="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Congratulations! You did great 🎉"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/scoreContainer"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+         />
+
+<!--    <Button-->
+<!--        android:id="@+id/btnRetry"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:backgroundTint="#5E35B1"-->
+<!--        android:text="Retry"-->
+<!--        android:textColor="@color/white"-->
+<!--        android:visibility="invisible"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/btnHome"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/tvMessage" />-->
+
+    <Button
+        android:id="@+id/btnHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#081B97"
+        android:text="Back to Home"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvMessage" />
+
+    <Button
+        android:id="@+id/btnLeaderboard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#081B97"
+        android:text="Leaderboard"
+
+        android:textColor="@color/white"
+
+        app:layout_constraintEnd_toEndOf="@+id/btnHome"
+        app:layout_constraintStart_toStartOf="@+id/btnHome"
+        app:layout_constraintTop_toBottomOf="@+id/btnHome" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

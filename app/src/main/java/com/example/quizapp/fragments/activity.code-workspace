@@ -1,0 +1,25 @@
+{
+	"folders": [
+		{
+			"path": "../activity"
+		},
+		{
+			"path": "../adapter"
+		},
+		{
+			"path": "../db"
+		},
+		{
+			"path": "."
+		},
+		{
+			"path": "../model"
+		},
+		{
+			"path": "../repository"
+		},
+		{
+			"path": "../viewmodel"
+		}
+	]
+}
