@@ -31,7 +31,7 @@ import kotlin.contracts.contract
 
 class AddCategoryFragment : Fragment() {
 
-    private lateinit var imageURI: Uri
+
     private  lateinit var imageView: ImageView
     lateinit var categoryET: EditText
     lateinit var questionET: EditText
