@@ -80,11 +80,18 @@
         android:name="com.example.quizapp.fragments.AddQuestionFragment"
         android:label="fragment_add_question"
         tools:layout="@layout/fragment_add_question" />
+
     <fragment
         android:id="@+id/addCategoryFragment"
         android:name="com.example.quizapp.fragments.AddCategoryFragment"
         android:label="fragment_add_category"
-        tools:layout="@layout/fragment_add_category" />
-
+        tools:layout="@layout/fragment_add_category" >
+        <action
+            android:id="@+id/action_addCategoryFragment_pop_including_homeFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+<!--<action app:popUpTo="@id/homeFragment"-->
+<!--    app:popUpToInclusive="true"/>-->
 
 </navigation>

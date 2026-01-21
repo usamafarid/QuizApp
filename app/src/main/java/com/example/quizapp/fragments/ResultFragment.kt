@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.util.Util
 import com.example.quizapp.R
 import com.example.quizapp.db.CategoryDAO
 import com.example.quizapp.db.LeaderBoardDAO
@@ -21,6 +22,8 @@ import com.example.quizapp.viewmodel.LeaderBoardVM
 import com.example.quizapp.viewmodel.LeaderBoardVMFactory
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.Date
+import kotlin.time.Duration.Companion.days
 
 
 class ResultFragment : Fragment() {
@@ -75,7 +78,7 @@ class ResultFragment : Fragment() {
         //db=score.text
 
         lifecycleScope.launch(Dispatchers.IO){
-            val user= LeaderBoardModel(0,"usama",finalScore ?: 0)
+            val user= LeaderBoardModel(0,"usama",finalScore ?: 0, Date())
 
             leaderBoardVM.saveScore(user)
         }

@@ -7,19 +7,29 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
+import android.widget.PopupMenu
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.quizapp.R
 import com.example.quizapp.db.QuizDB
+import com.example.quizapp.model.LeaderBoardModel
 import com.example.quizapp.model.QuestionModel
 import com.example.quizapp.repository.QuizRepository
 import com.example.quizapp.viewmodel.QuizVM
 import com.example.quizapp.viewmodel.QuizVMFactory
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import java.util.Date
+
 class QuizFragment : Fragment() {
 //    private lateinit var recyclerView: RecyclerView
 //    private lateinit var adapter: QuizAdapter
@@ -38,6 +48,8 @@ class QuizFragment : Fragment() {
     private  lateinit var buttonNext: Button
     private  lateinit var buttonSubmit: Button
 
+    lateinit var editText: EditText
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -54,6 +66,7 @@ class QuizFragment : Fragment() {
         quizVM = ViewModelProvider(this, quizVMFactory)[QuizVM::class.java]
 
         textView=view.findViewById<TextView>(R.id.tvQuestionText)
+        editText=view.findViewById<EditText>(R.id.etSaveName)
         quesTV=view.findViewById(R.id.tvQuestionCount)
         timer=view.findViewById(R.id.tvTimer)
         radioGroup=view.findViewById<RadioGroup>(R.id.radiogroup)
@@ -130,6 +143,7 @@ class QuizFragment : Fragment() {
         })
     }
 
+    @OptIn(DelicateCoroutinesApi::class)
     private fun buttonsSetup() {
         //1
 //        if (currentQuestion==0){
@@ -178,15 +192,49 @@ class QuizFragment : Fragment() {
             }
         }
         buttonSubmit.setOnClickListener {
+
+
+            //alertdialogbox
+            val alertDialog= AlertDialog.Builder(requireContext())
+            //inflater
+            val inflater=layoutInflater
+            val inflate=inflater.inflate(R.layout.dialog_score_save,null)
+            //find views
+            editText=inflate.findViewById(R.id.etSaveName)
+            //use builder object
+            alertDialog.setView(inflate)
             val score= quizVM.score.value
-            val questionList= list.size
             val bundle= Bundle()
+            if (score != null) {
+                bundle.putInt("final-score",score)
+
+            alertDialog.setPositiveButton("Save"){ dialog,score->
+                GlobalScope.launch(Dispatchers.Main) {
+                    val name = editText.text.toString()
+                    val score = score
+
+                    quizVM.repository.leaderBoardDAO.insertResult(
+                        LeaderBoardModel(0, name, score, Date())
+                    )
+                    quizVM.insertScore()
+                    findNavController().navigate(R.id.action_quizFragment_to_resultFragment, bundle)
+                }
+                }
+
+
+            }
+            alertDialog.show()
+
+        //    val score= quizVM.score.value
+            val questionList= list.size
+        //    val bundle= Bundle()
             if (score != null) {
                 bundle.putInt("final-score",score)
             }
             bundle.putInt("total-questions",questionList)
             quizVM.cancelTimer()
-            findNavController().navigate(R.id.action_quizFragment_to_resultFragment,bundle)
+
+
         }
     }
 

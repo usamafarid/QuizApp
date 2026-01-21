@@ -1,5 +1,6 @@
 package com.example.quizapp.adapter
 
+import android.content.ContentResolver
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,16 +9,21 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.graphics.drawable.toIcon
 import androidx.core.net.toUri
+import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.quizapp.R
 import com.example.quizapp.model.CategoryModel
 
 class CardAdapter(private val context: Context, private var quiz: MutableList<CategoryModel>) : RecyclerView.Adapter<CardAdapter.QuizViewHolder>() {
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuizViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -33,7 +39,26 @@ class CardAdapter(private val context: Context, private var quiz: MutableList<Ca
 //            holder.imageView.setImageURI ( quiz[position].imagePath.toUri())
 //
 //        }
-        holder.imageView.setImageURI ( quiz[position].imagePath.toUri())
+
+//        try {
+//            holder.imageView.setImageURI ( quiz[position].imagePath.toUri())
+//        }catch (e: SecurityException){
+//            holder.imageView.setImageResource(R.drawable.ic_launcher_background)
+//            Toast.makeText(context, "${e.message}", Toast.LENGTH_SHORT).show()
+//       }
+
+//        val pickVisualMedia=
+         val contentResolver: ContentResolver = context.applicationContext.contentResolver
+//        contentResolver.takePersistableUriPermission()
+
+
+
+//        holder.imageView.setImageURI ( quiz[position].imagePath.toUri())
+        Glide.with(context)
+            .load(quiz[position].imagePath)
+            .placeholder(R.drawable.ic_launcher_background)
+            .error(R.drawable.ic_launcher_background)
+            .into(holder.imageView)
         holder.textView1.text = quiz[position].name
         holder.textView2.text = quiz[position].text
 
@@ -55,7 +80,7 @@ class CardAdapter(private val context: Context, private var quiz: MutableList<Ca
     fun updateList(categoryModel: List<CategoryModel>){
         quiz.clear()
         quiz.addAll(categoryModel)
-//        notifyDataSetChanged()
+        notifyDataSetChanged()
     }
 
     inner class QuizViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

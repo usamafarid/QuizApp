@@ -1,0 +1,71 @@
+Android Development (Java) Quiz
+Question 1
+Which method is the first to be called when an Activity is created?
+	• A) onStart()
+	• B) onCreate()
+	• C) onResume()
+	• D) onInitialize()
+	• Correct Answer: B
+Question 2
+Which class is used to navigate from one Activity to another?
+	• A) Link
+	• B) Switcher
+	• C) Intent
+	• D) Navigator
+	• Correct Answer: C
+Question 3
+Where is the app's package name and permissions declared?
+	• A) MainActivity.java
+	• B) AndroidManifest.xml
+	• C) build.gradle
+	• D) strings.xml
+	• Correct Answer: B
+Question 4
+What is used to display a small, temporary message on the screen?
+	• A) Log.d()
+	• B) Alert()
+	• C) Toast
+	• D) Notify()
+	• Correct Answer: C
+Question 5
+Which interface is used to handle a button click in Java?
+	• A) OnClickListener
+	• B) OnTouchListener
+	• C) OnHoldListener
+	• D) ActionListener
+	• Correct Answer: A
+Question 6
+Which keyword is used to inherit properties from one class to another?
+	• A) implements
+	• B) includes
+	• C) extends
+	• D) inherits
+	• Correct Answer: C
+Question 7
+In which file are external library dependencies (implementation) added?
+	• A) settings.gradle
+	• B) build.gradle (Module level)
+	• C) AndroidManifest.xml
+	• D) config.xml
+	• Correct Answer: B
+Question 8
+What is the purpose of findViewById()?
+	• A) To create a new screen
+	• B) To link an XML view to a Java object
+	• C) To search for data in the database
+	• D) To connect the app to the internet
+	• Correct Answer: B
+Question 9
+Which keyword makes a variable's value constant (cannot be changed)?
+	• A) static
+	• B) final
+	• C) constant
+	• D) fixed
+	• Correct Answer: B
+Question 10
+Which view is the most memory-efficient for displaying long lists?
+	• A) ScrollView
+	• B) ListView
+	• C) RecyclerView
+	• D) TableLayout
+	• Correct Answer: C

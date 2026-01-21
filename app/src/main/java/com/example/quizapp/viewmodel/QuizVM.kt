@@ -8,15 +8,20 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.quizapp.model.CategoryModel
+import com.example.quizapp.model.LeaderBoardModel
 import com.example.quizapp.model.QuestionModel
 import com.example.quizapp.repository.QuizRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.Date
 import java.util.Timer
 import kotlin.concurrent.timer
 
 
 class QuizVM(var repository: QuizRepository): ViewModel() {
+
+    private  lateinit var list: List<QuestionModel>
+
     private lateinit var timer: CountDownTimer
     //1
 //     fun category(){
@@ -69,11 +74,24 @@ class QuizVM(var repository: QuizRepository): ViewModel() {
         }
     }
     fun incrementScore(){
-        val update=(_score.value ?: 0) + 1
-        _score.postValue(update)
+
+        if (selectOption.value == currentQuestion.value?.correct){
+
+            val update=(_score.value ?: 0) + 1
+            _score.postValue(update)
+        }
+
     }
+    fun insertScore(){
+        viewModelScope.launch(Dispatchers.IO) {
+            val result= LeaderBoardModel(0, name = "",score.value!!, date = Date())
+            repository.insertResult(result)
+        }
 
+    }
+    fun getScore(){
 
+    }
 
 //    fun populateDatabase(){
 //        viewModelScope.launch(Dispatchers.IO){
@@ -110,7 +128,7 @@ class QuizVM(var repository: QuizRepository): ViewModel() {
 
 
     //update VM
-    private var _questionList= MutableLiveData< List<QuestionModel>>()
+    private var _questionList = MutableLiveData< List<QuestionModel>>()
 
     //observe UI but not modify behind return mutable livedata
     val questionList: LiveData<List<QuestionModel>>

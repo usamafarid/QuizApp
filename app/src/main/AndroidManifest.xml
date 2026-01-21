@@ -3,7 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
+<!--    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />-->
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32"/>
+<!--    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"-->
+<!--        android:maxSdkVersion="32"/>-->
+<!--    <uses-feature android:name="android.hardware.camera" android:required="false"/>-->
+<!--    <uses-permission android:name="android.permission.CAMERA"/>-->
 
     <application
         android:allowBackup="true"
@@ -37,6 +44,16 @@
 <!--                <category android:name="android.intent.category.LAUNCHER" />-->
 <!--            </intent-filter>-->
         </activity>
+
+<!--        <provider-->
+<!--            android:authorities="com.example.quizapp"-->
+<!--            android:name="androidx.core.content.FileProvider"-->
+<!--            android:grantUriPermissions="true"-->
+<!--            android:exported="false">-->
+
+<!--            <meta-data android:name="android.support.File_Provider_Path">-->
+<!--            </meta-data>-->
+<!--        </provider>-->
     </application>
 
 </manifest>

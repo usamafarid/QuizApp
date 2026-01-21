@@ -12,6 +12,6 @@ interface LeaderBoardDAO {
 
    @Insert
    suspend fun insertResult(result: LeaderBoardModel)
-@Query("Select * FROM leaderboard ORDER BY score Desc Limit 5")
+@Query("SELECT * FROM leaderboard ORDER BY score > 0 DESC LIMIT 5")
     fun  getTopScores(): LiveData<List<LeaderBoardModel>>
 }

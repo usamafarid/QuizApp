@@ -9,7 +9,7 @@
 
     <item android:title="Quiz"
         android:id="@+id/quizFragment"
-        android:icon="@drawable/quiz"/>
+        android:icon="@drawable/quizstart"/>
 
     <item android:title="Result"
         android:id="@+id/resultFragment"

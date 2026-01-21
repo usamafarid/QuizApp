@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverter
+import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.quizapp.R
 import com.example.quizapp.model.CategoryModel
@@ -14,6 +16,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @Database(entities = [LeaderBoardModel::class, QuestionModel::class, CategoryModel::class], version = 1)
+@TypeConverters(Convertor::class)
 abstract class QuizDB : RoomDatabase() {
 
     abstract fun leaderboardDao(): LeaderBoardDAO

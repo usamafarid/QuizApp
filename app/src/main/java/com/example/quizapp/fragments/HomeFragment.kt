@@ -34,9 +34,10 @@ class HomeFragment : Fragment() {
      lateinit var quizVM: QuizVM
 //    lateinit var quizVMFactory: QuizVMFactory
     lateinit var fab: FloatingActionButton
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val quizDB = QuizDB.getInstance(requireContext())
+        val quizDB = QuizDB.getInstance(requireContext().applicationContext)
         val quizrepo = QuizRepository(quizDB.categoryDao(), quizDB.questionDao(), quizDB.leaderboardDao())
         val quizVMFactory = QuizVMFactory(quizrepo)
         quizVM = ViewModelProvider(

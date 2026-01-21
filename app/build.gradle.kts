@@ -12,6 +12,7 @@ android {
     defaultConfig {
         applicationId = "com.example.quizapp"
         minSdk = 27
+        maxSdk = 36
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
@@ -29,20 +30,30 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = "1.8"
+    //old
+//    kotlinOptions {
+//        jvmTarget = "1.8"
+//    }
+    kotlin {
+        compilerOptions { jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17) }
     }
 }
 
 dependencies {
-//    val room_version = "2.8.2"
+//    val room_version = "2.8.4"
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
 
+
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.compose)
+
+    implementation (libs.glide)
+    annotationProcessor (libs.compiler)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
