@@ -66,7 +66,7 @@ class QuizFragment : Fragment() {
         quizVM = ViewModelProvider(this, quizVMFactory)[QuizVM::class.java]
 
         textView=view.findViewById<TextView>(R.id.tvQuestionText)
-        editText=view.findViewById<EditText>(R.id.etSaveName)
+//        editText=view.findViewById<EditText>(R.id.etSaveName)
         quesTV=view.findViewById(R.id.tvQuestionCount)
         timer=view.findViewById(R.id.tvTimer)
         radioGroup=view.findViewById<RadioGroup>(R.id.radiogroup)
@@ -82,12 +82,6 @@ class QuizFragment : Fragment() {
         buttonSubmit=view.findViewById<Button>(R.id.btnSubmit)
 
 
-        //recyclerview and adapter work in 4 lines
-//        recyclerView = view.findViewById(R.id.questionrecyclerview)
-//        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-//        adapter = QuizAdapter(requireContext(), mutableListOf())
-//        recyclerView.adapter = adapter
-
         buttonsSetup()
 
         radioGroup.setOnCheckedChangeListener {
@@ -99,7 +93,6 @@ class QuizFragment : Fragment() {
                 val selectedRadioButton= view.findViewById<RadioButton>(checkedID)
                 val selectedAnswer= selectedRadioButton.text
 
-
                 if (selectedAnswer == list[currentQuestion].correct) {
                 Toast.makeText(context, "green border", Toast.LENGTH_SHORT).show()
                     quizVM.incrementScore()
@@ -108,9 +101,7 @@ class QuizFragment : Fragment() {
                 else
                     Toast.makeText(context, "red border", Toast.LENGTH_SHORT).show()
             }
-
         }
-
 
         val catId=arguments?.getInt("categoryID",-1)
         if (catId!=-1 && catId!=0){
@@ -143,13 +134,9 @@ class QuizFragment : Fragment() {
         })
     }
 
-    @OptIn(DelicateCoroutinesApi::class)
+
     private fun buttonsSetup() {
         //1
-//        if (currentQuestion==0){
-//            View.GONE
-//        }
-
 
         buttonNext.setOnClickListener{
 
@@ -157,32 +144,15 @@ class QuizFragment : Fragment() {
             if (currentQuestion==list.size){
                 Toast.makeText(requireContext(), "Quiz Finish", Toast.LENGTH_SHORT).show()
                 //2
-//                buttonPrevious.isInvisible
-//                buttonNext.isInvisible
-//                val score= quizVM.score.value
-//                val questionList= list.size
-//                val bundle= Bundle()
-//                if (score != null) {
-//                    bundle.putInt("final-score",score)
-//                }
-//                bundle.putInt("total-questions",questionList)
-//                findNavController().navigate(R.id.action_quizFragment_to_resultFragment,bundle)
             }
             else {
                 displayData()
             }
 
             //3
-//            if (currentQuestion==list.size -1){
-//                buttonNext.isInvisible
-//                buttonSubmit.visibility
-//            }
         }
         buttonPrevious.setOnClickListener{
             //4
-//            if (currentQuestion==0){
-//                View.GONE
-//            }
             currentQuestion--
             if (currentQuestion==1){
                 Toast.makeText(requireContext(), "This is 1 Question of Your Quiz", Toast.LENGTH_SHORT).show()
@@ -216,7 +186,7 @@ class QuizFragment : Fragment() {
                     quizVM.repository.leaderBoardDAO.insertResult(
                         LeaderBoardModel(0, name, score, Date())
                     )
-                    quizVM.insertScore()
+                 //   quizVM.insertScore()
                     findNavController().navigate(R.id.action_quizFragment_to_resultFragment, bundle)
                 }
                 }
@@ -237,14 +207,6 @@ class QuizFragment : Fragment() {
 
         }
     }
-
-//    private fun loadQuestions(cid:Int) {
-//        val categoryId= arguments?.getInt("categoryID")?.let { category ->
-//            Toast.makeText(context, category, Toast.LENGTH_SHORT).show()
-//            Log.d("TAG", category.toString())
-//            quizVM.loadQuestions(cid)
-//        }
-//    }
 
     //changing in this obser question in now
     private fun questionObserver() {

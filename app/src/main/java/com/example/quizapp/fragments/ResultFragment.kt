@@ -20,6 +20,8 @@ import com.example.quizapp.model.LeaderBoardModel
 import com.example.quizapp.repository.QuizRepository
 import com.example.quizapp.viewmodel.LeaderBoardVM
 import com.example.quizapp.viewmodel.LeaderBoardVMFactory
+import com.example.quizapp.viewmodel.ResultVMFactory
+import com.example.quizapp.viewmodel.ResultViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.Date
@@ -36,11 +38,8 @@ class ResultFragment : Fragment() {
     private  lateinit var questionDAO: QuestionDAO
     private  lateinit var categoryDAO: CategoryDAO
     private  lateinit var repository: QuizRepository
-    private  lateinit var factory: LeaderBoardVMFactory
-    private  lateinit var leaderBoardVM: LeaderBoardVM
-
-
-
+    private  lateinit var factory: ResultVMFactory
+    private  lateinit var resultViewModel: ResultViewModel
 
 
     override fun onCreateView(
@@ -63,8 +62,8 @@ class ResultFragment : Fragment() {
         questionDAO= db.questionDao()
         categoryDAO= db.categoryDao()
         repository= QuizRepository(categoryDAO,questionDAO,leaderBoardDAO)
-        factory= LeaderBoardVMFactory(repository)
-        leaderBoardVM= ViewModelProvider(this,factory).get(LeaderBoardVM::class.java)
+        factory= ResultVMFactory(requireContext(),repository)
+        resultViewModel= ViewModelProvider(this,factory).get(ResultViewModel::class.java)
 
 
 
@@ -80,10 +79,8 @@ class ResultFragment : Fragment() {
         lifecycleScope.launch(Dispatchers.IO){
             val user= LeaderBoardModel(0,"usama",finalScore ?: 0, Date())
 
-            leaderBoardVM.saveScore(user)
+            resultViewModel.insertResult(user)
         }
-
-
 
 
         homeButton.setOnClickListener {
@@ -95,6 +92,5 @@ class ResultFragment : Fragment() {
         }
 
     }
-
 
 }

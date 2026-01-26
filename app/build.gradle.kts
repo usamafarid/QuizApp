@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
   //  id("kotlin-kapt")
     id("com.google.devtools.ksp")
+ //   alias(libs.plugins.google.gms.google.services)
+ //   alias(libs.plugins.google.firebase.crashlytics)
 }
 
 android {
@@ -46,6 +48,7 @@ dependencies {
 //    val room_version = "2.8.4"
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
+//    implementation(libs.firebase.crashlytics)
     ksp(libs.androidx.room.compiler)
 
 

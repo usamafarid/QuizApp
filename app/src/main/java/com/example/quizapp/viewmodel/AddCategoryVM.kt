@@ -1,5 +1,6 @@
 package com.example.quizapp.viewmodel
 
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,8 +17,13 @@ class AddCategoryVM(val repository: QuizRepository): ViewModel() {
 
   private var _category= MutableLiveData<CategoryModel>()
 
-    val categoryInsert : LiveData <CategoryModel>
+    val category : LiveData <CategoryModel>
         get() = _category
+
+    private var _categories = MutableLiveData< List<CategoryModel>>()
+    val categories: LiveData<List<CategoryModel>>
+        get() = _categories
+
 
 
     fun category(cid: Int,name: String,text: String,imagePath: String): CategoryModel{
@@ -25,12 +31,14 @@ class AddCategoryVM(val repository: QuizRepository): ViewModel() {
     }
 
     fun insertCategory(categoryModel: CategoryModel){
-        viewModelScope.launch(Dispatchers.IO){
+        viewModelScope.launch{
             repository.insertCategory(categoryModel)
+
         }
     }
     fun getCategory(){
-        viewModelScope.launch(Dispatchers.IO){
+
+        viewModelScope.launch{
             repository.getCategory()
         }
     }

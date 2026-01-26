@@ -1,5 +1,6 @@
 package com.example.quizapp.repository
 
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.LiveData
 import com.example.quizapp.db.CategoryDAO
 import com.example.quizapp.db.QuestionDAO
@@ -7,15 +8,19 @@ import com.example.quizapp.db.LeaderBoardDAO
 import com.example.quizapp.model.QuestionModel
 import com.example.quizapp.model.CategoryModel
 import com.example.quizapp.model.LeaderBoardModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+
 
 class QuizRepository(val categoryDAO: CategoryDAO,val questionDAO: QuestionDAO,val leaderBoardDAO: LeaderBoardDAO) {
 
-//    private var quizDAO= QuizDAO
-//    private var questionDAO=quizDB.questionDao()
 
-    //this fun not used because direct questions insert through db
+      //new professional way coroutine always use in repository.so this reason
     suspend fun insertQuestion(questionModel: QuestionModel ){
-        questionDAO.insertQuestions(questionModel)
+        withContext(Dispatchers.IO){
+            questionDAO.insertQuestions(questionModel)
+        }
+
 
     }
 //    fun question(qid:Int,questionText: String,optionA: String,optionB: String,optionC: String,optionD: String,correct: String,userSelected: String,cid: Int): QuestionModel{
@@ -23,11 +28,15 @@ class QuizRepository(val categoryDAO: CategoryDAO,val questionDAO: QuestionDAO,v
 //    }
 
      suspend fun getQuestion(categoryID: Int):  List<QuestionModel>{
-         return  questionDAO.getQuestions(categoryID)
-
+         withContext(Dispatchers.IO){
+             questionDAO.getQuestions(categoryID)
+         }
+         return questionDAO.getQuestions(categoryID)
     }
     suspend fun insertCategory(categoryModel: CategoryModel ){
-        categoryDAO.insertCategory(categoryModel)
+        withContext(Dispatchers.IO){
+            categoryDAO.insertCategory(categoryModel)
+        }
     }
 
     fun getCategory(): LiveData< List<CategoryModel>>{

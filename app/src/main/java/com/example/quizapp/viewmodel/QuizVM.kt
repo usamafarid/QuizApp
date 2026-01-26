@@ -5,6 +5,7 @@ import android.util.Log
 import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.quizapp.model.CategoryModel
@@ -16,28 +17,11 @@ import kotlinx.coroutines.launch
 import java.util.Date
 import java.util.Timer
 import kotlin.concurrent.timer
-
-
 class QuizVM(var repository: QuizRepository): ViewModel() {
 
     private  lateinit var list: List<QuestionModel>
 
     private lateinit var timer: CountDownTimer
-    //1
-//     fun category(){
-//         viewModelScope.launch(Dispatchers.IO){
-//             val categories: List<CategoryModel> = repository.getCategory()
-//             _categories.postValue(categories)
-//
-//         }
-//
-//    }
-//    private  val categoryID= MutableLiveData<Int>()
-
-    val categories: LiveData< List<CategoryModel>> = repository.getCategory()
-
-
-
     fun startTimer() {
          timer = object : CountDownTimer(60000L, 1000L) {
 
@@ -50,14 +34,6 @@ class QuizVM(var repository: QuizRepository): ViewModel() {
                 _quizFinish.postValue(true)
 
             }
-
-
-//        } CountDownTimer(60000,10000)
-//        timer=countDownTimer.start()
-//        countDownTimer.onTick(60000/1000)
-//        _remainingTime.postValue(1000)
-//
-//        countDownTimer.onFinish()
         }.start()
     }
     fun cancelTimer(){
@@ -82,52 +58,6 @@ class QuizVM(var repository: QuizRepository): ViewModel() {
         }
 
     }
-    fun insertScore(){
-        viewModelScope.launch(Dispatchers.IO) {
-            val result= LeaderBoardModel(0, name = "",score.value!!, date = Date())
-            repository.insertResult(result)
-        }
-
-    }
-    fun getScore(){
-
-    }
-
-//    fun populateDatabase(){
-//        viewModelScope.launch(Dispatchers.IO){
-//
-//
-//        }
-//    }
-    //1
-//    fun insertQuestion(questionModel: QuestionModel) {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            repository.insertQuestion(questionModel)
-//
-//        }
-//    }
-//    fun getQuestion(categoryID: Int): LiveData<List<QuestionModel>> {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            repository.getQuestion(categoryID)
-//        }
-//        return questionList
-//    }
-    //2
-//    fun insertCategory(categoryModel: List<CategoryModel>){
-//        viewModelScope.launch(Dispatchers.IO){
-//            repository.insertCategory(categoryModel)
-//        }
-//    }
-    //2
-//    fun allCategories(categoryModel: List<CategoryModel>){
-//        viewModelScope.launch(Dispatchers.IO){
-//            repository.insertCategory(categoryModel)
-//            _categories.postValue(categoryModel)
-//        }
-//    }
-
-
-    //update VM
     private var _questionList = MutableLiveData< List<QuestionModel>>()
 
     //observe UI but not modify behind return mutable livedata
@@ -167,30 +97,4 @@ class QuizVM(var repository: QuizRepository): ViewModel() {
     private var _quizFinish= MutableLiveData<Boolean>(false)
     val   quizFinish: LiveData<Boolean>
         get() = _quizFinish
-
-    //    init {
-//        viewModelScope.launch(Dispatchers.IO) {
-////           repository.insertQuestion(listOf(QuestionModel(0,"favourate lan","cpp","oop","java","python","none of these","ABCD","HTML")))
-////            _questionList.postValue(insert)
-//        }
-//    }
-
-//                //choose suggestion with scope or run scope for better performance
-//
-//            }
-//        }
-
-
-
-            //    fun question(questionText: String, optionA: String,optionB: String,optionC: String,optionD:String,correct: String,category: String): QuestionModel {
-//            viewModelScope.launch(Dispatchers.IO){
-//                val result=repository.getQuestion()
-//                questionList
-//
-//            }
-//        return
-//
-//        }
-
-
     }

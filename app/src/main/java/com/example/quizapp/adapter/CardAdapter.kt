@@ -13,6 +13,7 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.graphics.drawable.toIcon
 import androidx.core.net.toUri
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -32,27 +33,6 @@ class CardAdapter(private val context: Context, private var quiz: MutableList<Ca
     }
 
     override fun onBindViewHolder(holder: QuizViewHolder, position: Int) {
-//        if(quiz[position].image == -1){
-//            holder.imageView.setImageResource(quiz[position].image)
-//
-//        } else{
-//            holder.imageView.setImageURI ( quiz[position].imagePath.toUri())
-//
-//        }
-
-//        try {
-//            holder.imageView.setImageURI ( quiz[position].imagePath.toUri())
-//        }catch (e: SecurityException){
-//            holder.imageView.setImageResource(R.drawable.ic_launcher_background)
-//            Toast.makeText(context, "${e.message}", Toast.LENGTH_SHORT).show()
-//       }
-
-//        val pickVisualMedia=
-         val contentResolver: ContentResolver = context.applicationContext.contentResolver
-//        contentResolver.takePersistableUriPermission()
-
-
-
 //        holder.imageView.setImageURI ( quiz[position].imagePath.toUri())
         Glide.with(context)
             .load(quiz[position].imagePath)
@@ -71,17 +51,25 @@ class CardAdapter(private val context: Context, private var quiz: MutableList<Ca
             holder.itemView.findNavController().navigate(R.id.action_homeFragment_to_quizFragment,bundle)
 
         }
+
+    }
+    fun updateList(categoryModel:  List<CategoryModel>){
+        quiz.clear()
+        quiz.addAll(categoryModel)
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {
         return quiz.size
     }
-
-    fun updateList(categoryModel: List<CategoryModel>){
+    fun getCategories(categoryModel:  List<CategoryModel>){
         quiz.clear()
         quiz.addAll(categoryModel)
-        notifyDataSetChanged()
+           notifyDataSetChanged()
+
     }
+
+
 
     inner class QuizViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageView = itemView.findViewById<ImageView>(R.id.image)

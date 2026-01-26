@@ -44,11 +44,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-//          database= Room.databaseBuilder(applicationContext, QuizDB::class.java,"Quiz").build()
-        //access of database
-//        database= QuizDB.getInstance(this)
-
-
       // navHostFragment= NavHostFragment()
         toolbar=findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -63,32 +58,6 @@ class MainActivity : AppCompatActivity() {
 
         setupActionBarWithNavController(navController,appBarConfiguration)
         bottomNavigationView.setupWithNavController(navController)
-
-
-
-
-//        lifecycleScope.launch(Dispatchers.IO) {
-//        database.questionDao().insertQuestions(
-//            listOf(
-//                QuestionModel(0,"What does HTML stand for?","cpp","oop","java","python","HyperText Markup Language","HTML"),
-//                QuestionModel(0,"Choose correct HTML element for largest heading.","cpp","oop","java","python","<h1>","HTML"),
-//                QuestionModel(0,"Which tag is used to create a hyperlink?","cpp","oop","java","python","<a>","HTML"),
-//                QuestionModel(0,"Which HTML tag is used to insert an image?","cpp","oop","java","python","<img>","HTML"),
-//                QuestionModel(0,"Which attribute specifies an alternate text for an image?","cpp","oop","java","python","alt","HTML"),
-//                QuestionModel(0,"Which tag is used to insert a line break?","cpp","oop","java","python","<br>","HTML"),
-//                QuestionModel(0,"Which HTML element defines important text?","cpp","oop","java","python","<strong>","HTML"),
-//                QuestionModel(0,"What is the correct HTML for creating a checkbox?","cpp","oop","java","python","<input type=checkbox>","HTML"),
-//                QuestionModel(0,"How can you make a numbered list?","cpp","oop","java","python","<ol>","HTML"),
-//                QuestionModel(0,"What tag is used for table rows?","cpp","oop","java","python","<tr>","HTML"))
-//           )
-//        }
-
-//        database.questionDao().getQuestions("").observe(this, Observer{
-//
-//            Log.d("TAG","$database")
-//        })
-
-
     }
 
 }
