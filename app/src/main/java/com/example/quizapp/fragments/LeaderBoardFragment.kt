@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.quizapp.R
 import com.example.quizapp.adapter.LeaderBoardAdapter
+import com.example.quizapp.databinding.FragmentLeaderBoardBinding
 import com.example.quizapp.db.CategoryDAO
 import com.example.quizapp.db.QuestionDAO
 import com.example.quizapp.db.LeaderBoardDAO
@@ -24,6 +25,8 @@ import com.example.quizapp.viewmodel.LeaderBoardVMFactory
 
 
 class LeaderBoardFragment : Fragment() {
+    private var _binding: FragmentLeaderBoardBinding? =null
+    private val binding get() = _binding!!
     private  lateinit var leaderBoardVM: LeaderBoardVM
     private  lateinit var factory: LeaderBoardVMFactory
     private  lateinit var repository: QuizRepository
@@ -41,7 +44,8 @@ class LeaderBoardFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_leader_board, container, false)
+        _binding= FragmentLeaderBoardBinding.inflate(inflater,container,false)
+        return _binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -72,6 +76,11 @@ class LeaderBoardFragment : Fragment() {
 
         })
 
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding=null
     }
 
 

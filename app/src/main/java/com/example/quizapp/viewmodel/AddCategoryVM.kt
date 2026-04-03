@@ -30,7 +30,7 @@ class AddCategoryVM(val repository: QuizRepository): ViewModel() {
         return CategoryModel(cid=cid,name=name,text=text,imagePath=imagePath)
     }
 
-    fun insertCategory(categoryModel: CategoryModel){
+    fun insertCategory(categoryModel: List<CategoryModel>){
         viewModelScope.launch{
             repository.insertCategory(categoryModel)
 

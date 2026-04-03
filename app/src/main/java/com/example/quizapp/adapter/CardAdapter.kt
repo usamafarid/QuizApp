@@ -1,5 +1,6 @@
 package com.example.quizapp.adapter
 
+import android.annotation.SuppressLint
 import android.content.ContentResolver
 import android.content.Context
 import android.os.Bundle
@@ -53,7 +54,8 @@ class CardAdapter(private val context: Context, private var quiz: MutableList<Ca
         }
 
     }
-    fun updateList(categoryModel:  List<CategoryModel>){
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateList(categoryModel: List< CategoryModel>){
         quiz.clear()
         quiz.addAll(categoryModel)
         notifyDataSetChanged()
@@ -62,6 +64,7 @@ class CardAdapter(private val context: Context, private var quiz: MutableList<Ca
     override fun getItemCount(): Int {
         return quiz.size
     }
+    @SuppressLint("NotifyDataSetChanged")
     fun getCategories(categoryModel:  List<CategoryModel>){
         quiz.clear()
         quiz.addAll(categoryModel)

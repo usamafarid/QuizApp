@@ -3,6 +3,7 @@ package com.example.quizapp.activity
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.menu.MenuView
 import androidx.appcompat.widget.Toolbar
@@ -19,6 +20,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.room.Room
 import com.example.quizapp.R
+import com.example.quizapp.databinding.ActivityMainBinding
 import com.example.quizapp.model.QuestionModel
 import com.example.quizapp.db.QuizDB
 import com.example.quizapp.fragments.HomeFragment
@@ -29,6 +31,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
+    lateinit var binding : ActivityMainBinding
 
 //    lateinit var database: QuizDB
     lateinit var bottomNavigationView: BottomNavigationView
@@ -42,16 +45,17 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding= ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
       // navHostFragment= NavHostFragment()
-        toolbar=findViewById<Toolbar>(R.id.toolbar)
-        setSupportActionBar(toolbar)
+
+        setSupportActionBar(binding.toolbar)
         navHostFragment=supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         navController=navHostFragment.navController
       //  navController=findNavController(R.id.fragmentContainerView)
 
-        bottomNavigationView= findViewById<BottomNavigationView>(R.id.bottomNavigationView)
+        bottomNavigationView= binding.bottomNavigationView
         appBarConfiguration= AppBarConfiguration(setOf( R.id.homeFragment,R.id.quizFragment,R.id.resultFragment,
             R.id.leaderBoardFragment,R.id.addQuestionFragment, R.id.addCategoryFragment))
 

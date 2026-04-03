@@ -115,8 +115,8 @@ class AddCategoryFragment : Fragment() {
 
             if (setImageUri != null) {
                 val imagePath = setImageUri.toString()
-                val categoryModel = CategoryModel(0, categoryET.text.toString(), questionET.text.toString(), imagePath)
-                addCategoryVM.insertCategory(categoryModel)
+                val categoryModel  = CategoryModel(0, categoryET.text.toString(), questionET.text.toString(), imagePath)
+                addCategoryVM.insertCategory(listOf(categoryModel))
             }
 
             Toast.makeText(requireContext(), "Category Add Successfully", Toast.LENGTH_SHORT).show()

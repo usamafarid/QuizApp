@@ -14,14 +14,11 @@ import kotlinx.coroutines.withContext
 
 class QuizRepository(val categoryDAO: CategoryDAO,val questionDAO: QuestionDAO,val leaderBoardDAO: LeaderBoardDAO) {
 
-
       //new professional way coroutine always use in repository.so this reason
     suspend fun insertQuestion(questionModel: QuestionModel ){
         withContext(Dispatchers.IO){
             questionDAO.insertQuestions(questionModel)
         }
-
-
     }
 //    fun question(qid:Int,questionText: String,optionA: String,optionB: String,optionC: String,optionD: String,correct: String,userSelected: String,cid: Int): QuestionModel{
 //        return QuestionModel(qid,questionText=questionText, optionA = optionA, optionB = optionB, optionC = optionC, optionD = optionD, correct = correct,userSelected = userSelected,cid)
@@ -33,7 +30,7 @@ class QuizRepository(val categoryDAO: CategoryDAO,val questionDAO: QuestionDAO,v
          }
          return questionDAO.getQuestions(categoryID)
     }
-    suspend fun insertCategory(categoryModel: CategoryModel ){
+    suspend fun insertCategory(categoryModel: List<CategoryModel> ){
         withContext(Dispatchers.IO){
             categoryDAO.insertCategory(categoryModel)
         }
@@ -44,7 +41,10 @@ class QuizRepository(val categoryDAO: CategoryDAO,val questionDAO: QuestionDAO,v
 
     }
     suspend fun insertResult(result: LeaderBoardModel){
-         leaderBoardDAO.insertResult(result)
+        withContext(Dispatchers.IO){
+            leaderBoardDAO.insertResult(result)
+        }
+
     }
     fun getTopScore(): LiveData< List<LeaderBoardModel>>{
         return leaderBoardDAO.getTopScores()

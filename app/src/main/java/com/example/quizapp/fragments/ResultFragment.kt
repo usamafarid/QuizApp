@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.util.Util
 import com.example.quizapp.R
+import com.example.quizapp.databinding.FragmentResultBinding
 import com.example.quizapp.db.CategoryDAO
 import com.example.quizapp.db.LeaderBoardDAO
 import com.example.quizapp.db.QuestionDAO
@@ -29,10 +30,8 @@ import kotlin.time.Duration.Companion.days
 
 
 class ResultFragment : Fragment() {
-
-    private  lateinit var score: TextView
-    private  lateinit var homeButton: Button
-    private  lateinit var leaderButton: Button
+    private var _binding: FragmentResultBinding? =null
+    private val binding get() = _binding!!
     private  lateinit var db: QuizDB
     private  lateinit var leaderBoardDAO: LeaderBoardDAO
     private  lateinit var questionDAO: QuestionDAO
@@ -47,15 +46,12 @@ class ResultFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_result, container, false)
+        _binding= FragmentResultBinding.inflate(inflater,container,false)
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        score=view.findViewById<TextView>(R.id.tvScore)
-        homeButton=view.findViewById(R.id.btnHome)
-        leaderButton=view.findViewById(R.id.btnLeaderboard)
 
         db= QuizDB.getInstance(requireContext().applicationContext)
         leaderBoardDAO= db.leaderboardDao()
@@ -65,15 +61,13 @@ class ResultFragment : Fragment() {
         factory= ResultVMFactory(requireContext(),repository)
         resultViewModel= ViewModelProvider(this,factory).get(ResultViewModel::class.java)
 
-
-
         val finalScore=arguments?.getInt("final-score",0)
         val completeQuestions=arguments?.getInt("total-questions",0)
 
         val totalScore = completeQuestions
         val stringConcat: String = "$finalScore / $totalScore"
 
-        score.text=stringConcat
+        binding.tvScore.text=stringConcat
         //db=score.text
 
         lifecycleScope.launch(Dispatchers.IO){
@@ -83,14 +77,19 @@ class ResultFragment : Fragment() {
         }
 
 
-        homeButton.setOnClickListener {
+        binding.btnHome.setOnClickListener {
             findNavController().navigate(R.id.action_resultFragment_to_homeFragment)
         }
 
-        leaderButton.setOnClickListener {
+        binding.btnLeaderboard.setOnClickListener {
             findNavController().navigate(R.id.action_resultFragment_to_leaderBoardFragment)
         }
 
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding=null
     }
 
 }

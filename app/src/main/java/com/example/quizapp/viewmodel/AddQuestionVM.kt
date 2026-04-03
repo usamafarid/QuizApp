@@ -15,6 +15,7 @@ class AddQuestionVM(val repository: QuizRepository) : ViewModel() {
     //changing suggest gemini
     val categories: LiveData< List<CategoryModel>> = repository.getCategory()
 
+
     // This is the private mutable LiveData that only the ViewModel can modify.
     //2
 //    private val _categories = MutableLiveData<List<CategoryModel>>()

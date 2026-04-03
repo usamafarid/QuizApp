@@ -11,18 +11,22 @@ import kotlinx.coroutines.launch
 
 class HomeVM(val repository: QuizRepository): ViewModel() {
 
+    val cardCategory : LiveData< List<CategoryModel>> = repository.getCategory()
       private var _cardCategory= MutableLiveData<CategoryModel>()
-      val   cardCategory : LiveData<CategoryModel> get() = _cardCategory
+    //  val   cardCategory : LiveData<CategoryModel> get() = _cardCategory
 
 
-    fun insertCategory(category: CategoryModel){
+    fun insertCategory(category: List<CategoryModel>){
         viewModelScope.launch(Dispatchers.IO){
+
             repository.insertCategory(category)
+            _cardCategory
         }
 
     }
     fun getCategory(){
-        repository.getCategory()
+       repository.getCategory()
+
     }
     
 }

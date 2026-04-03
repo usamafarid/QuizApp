@@ -12,4 +12,6 @@ data class CategoryModel(
     val name: String = "",
     val text: String = "",
     val imagePath:String=""
+
 )
+

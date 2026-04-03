@@ -1,11 +1,11 @@
 package com.example.quizapp.db
 
-
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import com.example.quizapp.model.CategoryModel
+
 @Dao
 interface CategoryDAO {
 
@@ -16,5 +16,5 @@ interface CategoryDAO {
     fun getCategory(): LiveData<List<CategoryModel>>
 
     @Insert
-    suspend fun insertCategory(categoryModel: CategoryModel)
+    suspend fun insertCategory(categoryModel: List<CategoryModel>)
 }

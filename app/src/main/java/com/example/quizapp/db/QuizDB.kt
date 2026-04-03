@@ -52,7 +52,7 @@ abstract class QuizDB : RoomDatabase() {
                 .build()
 
                 INSTANCE = newInstance
-                newInstance
+                return newInstance
             }
         }
     }

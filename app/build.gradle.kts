@@ -31,10 +31,12 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+
     //old
 //    kotlinOptions {
 //        jvmTarget = "1.8"
@@ -42,6 +44,8 @@ android {
     kotlin {
         compilerOptions { jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17) }
     }
+    buildFeatures {
+        viewBinding=true }
 }
 
 dependencies {
@@ -50,11 +54,6 @@ dependencies {
     implementation(libs.androidx.room.ktx)
 //    implementation(libs.firebase.crashlytics)
     ksp(libs.androidx.room.compiler)
-
-
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.compose)
-
     implementation (libs.glide)
     annotationProcessor (libs.compiler)
 

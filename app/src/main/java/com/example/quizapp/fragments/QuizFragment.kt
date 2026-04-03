@@ -18,6 +18,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.quizapp.R
+import com.example.quizapp.databinding.FragmentQuizBinding
 import com.example.quizapp.db.QuizDB
 import com.example.quizapp.model.LeaderBoardModel
 import com.example.quizapp.model.QuestionModel
@@ -29,62 +30,36 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.util.Date
-
 class QuizFragment : Fragment() {
-//    private lateinit var recyclerView: RecyclerView
-//    private lateinit var adapter: QuizAdapter
+    private var _binding: FragmentQuizBinding? =null
+    private val binding get() = _binding!!
     private lateinit var quizVM: QuizVM
-    private lateinit var textView: TextView
-    private  lateinit var quesTV: TextView
-    private  lateinit var timer: TextView
-    private  lateinit var radioGroup: RadioGroup
-    private lateinit var radioButton1: RadioButton
-    private lateinit var radioButton2: RadioButton
-    private lateinit var radioButton3: RadioButton
-    private lateinit var radioButton4: RadioButton
     private lateinit var list: List<QuestionModel>
     private var currentQuestion = 0
-    private  lateinit var buttonPrevious: Button
-    private  lateinit var buttonNext: Button
-    private  lateinit var buttonSubmit: Button
-
     lateinit var editText: EditText
 
+    override fun onCreate(savedInstanceState : Bundle?) {
+        super.onCreate(savedInstanceState)
+        //create objects of DB,repo and VM
+        val quizDB = QuizDB.getInstance(requireContext())
+        val quizRepo = QuizRepository(quizDB.categoryDao(),quizDB.questionDao(),quizDB.leaderboardDao())
+        val quizVMFactory = QuizVMFactory(quizRepo)
+        quizVM = ViewModelProvider(this@QuizFragment, quizVMFactory)[QuizVM::class.java]
+
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_quiz, container, false)
+        _binding= FragmentQuizBinding.inflate(inflater,container,false)
+        return _binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //create objects of DB,repo and VM
-        val quizDB = QuizDB.getInstance(requireContext())
-        val quizRepo = QuizRepository(quizDB.categoryDao(),quizDB.questionDao(),quizDB.leaderboardDao())
-        val quizVMFactory = QuizVMFactory(quizRepo)
-        quizVM = ViewModelProvider(this, quizVMFactory)[QuizVM::class.java]
-
-        textView=view.findViewById<TextView>(R.id.tvQuestionText)
-//        editText=view.findViewById<EditText>(R.id.etSaveName)
-        quesTV=view.findViewById(R.id.tvQuestionCount)
-        timer=view.findViewById(R.id.tvTimer)
-        radioGroup=view.findViewById<RadioGroup>(R.id.radiogroup)
-
-
-        radioButton1=view.findViewById(R.id.button1)
-        radioButton2=view.findViewById(R.id.button2)
-        radioButton3=view.findViewById(R.id.button3)
-        radioButton4=view.findViewById(R.id.button4)
-
-        buttonPrevious=view.findViewById<Button>(R.id.btnPrevious)
-        buttonNext=view.findViewById<Button>(R.id.btnNext)
-        buttonSubmit=view.findViewById<Button>(R.id.btnSubmit)
-
-
         buttonsSetup()
 
-        radioGroup.setOnCheckedChangeListener {
+        binding.radiogroup.setOnCheckedChangeListener {
             group,  // zada tar iski zaroorat ni parti
             checkedID // magar iski zaroorat lazmi parti ha ya wo option ha jisa user na click kia ha uski ID data ha
             ->
@@ -94,12 +69,14 @@ class QuizFragment : Fragment() {
                 val selectedAnswer= selectedRadioButton.text
 
                 if (selectedAnswer == list[currentQuestion].correct) {
-                Toast.makeText(context, "green border", Toast.LENGTH_SHORT).show()
+              //  Toast.makeText(context, "green border", Toast.LENGTH_SHORT).show()
                     quizVM.incrementScore()
                 }
 
-                else
-                    Toast.makeText(context, "red border", Toast.LENGTH_SHORT).show()
+//                else{
+//                    Toast.makeText(context, "red border", Toast.LENGTH_SHORT).show()
+//                }
+
             }
         }
 
@@ -116,7 +93,7 @@ class QuizFragment : Fragment() {
     private fun timerObserver() {
         quizVM.remainingTime.observe(viewLifecycleOwner, Observer{
 
-            timer.text=it.toString()
+            binding.tvTimer.text=it.toString()
         })
 
         quizVM.quizFinish.observe(viewLifecycleOwner, Observer{
@@ -134,11 +111,9 @@ class QuizFragment : Fragment() {
         })
     }
 
-
     private fun buttonsSetup() {
         //1
-
-        buttonNext.setOnClickListener{
+        binding.btnNext.setOnClickListener{
 
             currentQuestion ++
             if (currentQuestion==list.size){
@@ -151,7 +126,7 @@ class QuizFragment : Fragment() {
 
             //3
         }
-        buttonPrevious.setOnClickListener{
+        binding.btnPrevious.setOnClickListener{
             //4
             currentQuestion--
             if (currentQuestion==1){
@@ -161,9 +136,7 @@ class QuizFragment : Fragment() {
                 displayData()
             }
         }
-        buttonSubmit.setOnClickListener {
-
-
+        binding.btnSubmit.setOnClickListener {
             //alertdialogbox
             val alertDialog= AlertDialog.Builder(requireContext())
             //inflater
@@ -229,29 +202,34 @@ class QuizFragment : Fragment() {
     }
     private fun displayData(){
      val question = list[currentQuestion]
-        textView.text=question.questionText
+        binding.tvQuestionText.text=question.questionText
         val questionCounter: String= "${currentQuestion +1} / ${list.size}"
-        quesTV.text=questionCounter
-        radioButton1.text=question.optionA
-        radioButton2.text=question.optionB
-        radioButton3.text=question.optionC
-        radioButton4.text=question.optionD
+        binding.tvQuestionCount.text=questionCounter
+        binding.button1.text=question.optionA
+        binding.button2.text=question.optionB
+        binding.button3.text=question.optionC
+        binding.button4.text=question.optionD
 
-         radioGroup.clearCheck()
+         binding.radiogroup.clearCheck()
         if (currentQuestion==0){
-            buttonPrevious.visibility= View.GONE
-            buttonNext.visibility= View.VISIBLE
-            buttonSubmit.visibility= View.GONE
+            binding.btnPrevious.visibility= View.GONE
+            binding.btnNext.visibility= View.VISIBLE
+            binding.btnSubmit.visibility= View.GONE
         }
         else if (currentQuestion==list.size-1){
-            buttonPrevious.visibility= View.VISIBLE
-            buttonNext.visibility= View.GONE
-            buttonSubmit.visibility= View.VISIBLE
+            binding.btnPrevious.visibility= View.VISIBLE
+            binding.btnNext.visibility= View.GONE
+            binding.btnSubmit.visibility= View.VISIBLE
         }
         else  {
-            buttonPrevious.visibility= View.VISIBLE
-            buttonNext.visibility= View.VISIBLE
-            buttonSubmit.visibility= View.GONE
+            binding.btnPrevious.visibility= View.VISIBLE
+            binding.btnNext.visibility= View.VISIBLE
+            binding.btnSubmit.visibility= View.GONE
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding=null
     }
 }
